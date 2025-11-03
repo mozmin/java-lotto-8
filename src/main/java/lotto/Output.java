@@ -15,25 +15,17 @@ public class Output {
         System.out.println("당첨 통계");
         System.out.println("---");
         for (Rank r : Rank.values()) {
-            if (r == Rank.MISS) continue;
-            System.out.printf("%d개 일치%s (%,d원) - %d개%n",
-                    matchCountOf(r),
-                    r == Rank.SECOND ? ", 보너스 볼 일치" : "",
-                    r.prize(),
-                    result.countOf(r)
-            );
+            if (r == Rank.MISS) continue; // MISS는 표에서 제외
+            printLine(r, result.countOf(r));
         }
         System.out.printf("총 수익률은 %s%%입니다.%n", result.yieldPercent().toPlainString());
     }
 
-    private int matchCountOf(Rank r) {
-        return switch (r) {
-            case FIRST -> 6;
-            case SECOND, THIRD -> 5;
-            case FOURTH -> 4;
-            case FIFTH -> 3;
-            default -> 0;
-        };
+    private void printLine(Rank r, int count) {
+        String bonusPart = r.getLabel();
+        if (!bonusPart.isEmpty()) bonusPart = ", " + bonusPart;
+        System.out.printf("%d개 일치%s (%,d원) - %d개%n",
+                r.getMatchedCount(), bonusPart, r.getPrize(), count);
     }
 
     public void printError(String message) {
