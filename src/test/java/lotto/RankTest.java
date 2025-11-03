@@ -20,9 +20,11 @@ public class RankTest {
     @Test
     // getter 확인
     void 등수별_상금_확인() {
-        assertThat(Rank.FIRST.prize()).isGreaterThan(Rank.SECOND.prize());
-        assertThat(Rank.SECOND.prize()).isGreaterThan(Rank.THIRD.prize());
-        assertThat(Rank.FIFTH.prize()).isGreaterThan(0);
+        assertThat(Rank.FIRST.prize()).isEqualTo(2000000000);
+        assertThat(Rank.SECOND.prize()).isEqualTo(30000000);
+        assertThat(Rank.THIRD.prize()).isEqualTo(1500000);
+        assertThat(Rank.FOURTH.prize()).isEqualTo(50000);
+        assertThat(Rank.FIFTH.prize()).isEqualTo(5000);
         assertThat(Rank.MISS.prize()).isZero();
     }
 }
