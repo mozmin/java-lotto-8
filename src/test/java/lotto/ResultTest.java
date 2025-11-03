@@ -34,11 +34,11 @@ public class ResultTest {
         assertThat(result.countOf(Rank.MISS)).isEqualTo(1);
 
         long expectedTotal =
-                (long) Rank.FIRST.prize()
-                        + (long) Rank.SECOND.prize()
-                        + (long) Rank.THIRD.prize()
-                        + (long) Rank.FOURTH.prize()
-                        + (long) Rank.FIFTH.prize(); // MISS는 0
+                (long) Rank.FIRST.getPrize()
+                        + (long) Rank.SECOND.getPrize()
+                        + (long) Rank.THIRD.getPrize()
+                        + (long) Rank.FOURTH.getPrize()
+                        + (long) Rank.FIFTH.getPrize(); // MISS는 0
         assertThat(result.totalPrize()).isEqualTo(expectedTotal);
     }
 

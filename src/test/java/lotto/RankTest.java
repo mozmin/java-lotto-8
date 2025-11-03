@@ -20,11 +20,11 @@ public class RankTest {
     @Test
     // getter 확인
     void 등수별_상금_확인() {
-        assertThat(Rank.FIRST.prize()).isEqualTo(2000000000);
-        assertThat(Rank.SECOND.prize()).isEqualTo(30000000);
-        assertThat(Rank.THIRD.prize()).isEqualTo(1500000);
-        assertThat(Rank.FOURTH.prize()).isEqualTo(50000);
-        assertThat(Rank.FIFTH.prize()).isEqualTo(5000);
-        assertThat(Rank.MISS.prize()).isZero();
+        assertThat(Rank.FIRST.getPrize()).isEqualTo(2000000000);
+        assertThat(Rank.SECOND.getPrize()).isEqualTo(30000000);
+        assertThat(Rank.THIRD.getPrize()).isEqualTo(1500000);
+        assertThat(Rank.FOURTH.getPrize()).isEqualTo(50000);
+        assertThat(Rank.FIFTH.getPrize()).isEqualTo(5000);
+        assertThat(Rank.MISS.getPrize()).isZero();
     }
 }
