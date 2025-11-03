@@ -22,7 +22,7 @@ public class Result {
         for (Lotto l : lotto) {
             Rank rank = winningNumbers.rankOf(l);
             counts.put(rank, counts.get(rank) + 1);
-            prizeSum += rank.prize();
+            prizeSum += rank.getPrize();
         }
         this.totalPrize = prizeSum;
         this.yieldPercent = calcYieldPercent(prizeSum, purchaseAmount);
