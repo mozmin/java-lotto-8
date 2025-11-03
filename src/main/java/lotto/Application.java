@@ -4,36 +4,61 @@ import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
+        new Application().run();
+    }
+
+    public void run(){
         Input in = new Input();
         Output out = new Output();
 
-        try {
-            // 1) 금액 입력 → 장수 계산
-            int amount = in.readPurchaseAmount();
-            Calculator calc = new Calculator(amount);
-            int count = calc.count();
+        int amount = inputAmount(in, out);
+        int count = new Calculator(amount).count();
 
-            // 2) 발행
-            LottoGenerator generator = new LottoGenerator(new RandomNumbersPick());
-            List<Lotto> tickets = generator.generate(count);
-            out.printPurchased(tickets);
+        List<Lotto> tickets = pickLotto(count);
+        out.printPurchased(tickets);
 
-            // 3) 당첨/보너스 입력
-            List<Integer> winningNums = in.readWinningNumbers();
-            Lotto winning = new Lotto(winningNums);
-            int bonus = in.readBonusNumber();
-            WinningNumbers wn = new WinningNumbers(winning, bonus);
+        Lotto winning = inputWinningNumbers(in, out);
+        WinningNumbers wn = inputBonusNumber(in, out, winning);
 
-            // 4) 집계/수익률
-            Result result = new Result(tickets, wn, amount);
+        Result result = new Result(tickets, wn, amount);
+        out.printResult(result);
+    }
 
-            // 5) 출력
-            out.printResult(result);
+    private List<Lotto> pickLotto(int count) {
+        LottoGenerator generator = new LottoGenerator(new RandomNumbersPick());
+        return generator.generate(count);
+    }
 
-        } catch (IllegalArgumentException e) {
-            // 과제 정책상 [ERROR]로 시작하는 메시지 후 종료(또는 재입력 루프)
-            // 재입력 루프 요구 시, 각 입력 단계별 while로 분리해 반복 처리하세요.
-            out.printError(e.getMessage());
+    private int inputAmount(Input in, Output out) {
+        while (true) {
+            try {
+                int amount = in.readPurchaseAmount();
+                new Calculator(amount); // 검증
+                return amount;
+            } catch (IllegalArgumentException e) {
+                out.printError(e.getMessage());
+            }
+        }
+    }
+
+    private Lotto inputWinningNumbers(Input in, Output out) {
+        while (true) {
+            try {
+                return new Lotto(in.readWinningNumbers());
+            } catch (IllegalArgumentException e) {
+                out.printError(e.getMessage());
+            }
+        }
+    }
+
+    private WinningNumbers inputBonusNumber(Input in, Output out, Lotto winning) {
+        while (true) {
+            try {
+                int bonus = in.readBonusNumber();
+                return new WinningNumbers(winning, bonus);
+            } catch (IllegalArgumentException e) {
+                out.printError(e.getMessage());
+            }
         }
     }
 }
